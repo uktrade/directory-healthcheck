@@ -6,4 +6,4 @@
 #
 django-health-check==3.0.0
 django==1.11.5
-pytz==2017.3              # via django
+pytz==2017.2
