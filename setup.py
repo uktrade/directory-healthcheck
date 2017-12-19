@@ -25,7 +25,7 @@ def get_requirements():
 
 
 setup(
-    name='sigauth',
+    name='directory_healthcheck',
     version=get_version(),
     url='https://github.com/uktrade/directory-healthcheck',
     license='MIT',
