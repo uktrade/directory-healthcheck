@@ -1,0 +1,2 @@
+django-health-check==3.0.0
+django==1.11.5
