@@ -27,10 +27,10 @@ def get_requirements():
 setup(
     name='sigauth',
     version=get_version(),
-    url='https://github.com/uktrade/directory-signature-auth',
+    url='https://github.com/uktrade/directory-healthcheck',
     license='MIT',
     author='Department for International Trade',
-    description='Signature authentication library for Export Directory.',
+    description='Library to streamline healthchecks for DIT Directory apps.',
     packages=find_packages(),
     long_description=open('README.md').read(),
     include_package_data=True,
