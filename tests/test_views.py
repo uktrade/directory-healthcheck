@@ -1,19 +1,67 @@
-import pytest
+from health_check.backends import BaseHealthCheckBackend
+from health_check.exceptions import HealthCheckException
 
-from django.conf import settings
-from django.core.urlresolvers import reverse
+from directory_healthcheck import views
 
 
-def test_health_check_no_token(client):
-    response = client.get(reverse('health-check'))
+class UnhealthyServiceChecker(BaseHealthCheckBackend):
+    def check_status(self):
+        raise HealthCheckException('error')
+
+    def run_check(self):
+        super().run_check()
+        self.time_taken = 0
+
+
+class HealthyServiceChecker(BaseHealthCheckBackend):
+    def check_status(self):
+        return True
+
+    def run_check(self):
+        super().run_check()
+        self.time_taken = 0
+
+
+class UnhealthyTestView(views.BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return UnhealthyServiceChecker()
+
+
+class HealthyTestView(views.BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return HealthyServiceChecker()
+
+
+def test_health_check_no_token(rf):
+    request = rf.get('/')
+    response = HealthyTestView.as_view()(request)
 
     assert response.status_code == 403
 
 
-def test_health_check_valid_token(client):
-    response = client.get(
-        reverse('health-check'),
-        {'token': settings.HEALTH_CHECK_TOKEN}
-    )
+def test_health_check_valid_token(rf):
+    request = rf.get('/', {'token': 'debug'})
+    response = HealthyTestView.as_view()(request)
 
     assert response.status_code == 200
+    assert response.render().content == (
+        b'<?xml version="1.0" encoding="UTF-8"?>\n'
+        b'<pingdom_http_custom_check>\n    '
+        b'<status>OK</status>\n    '
+        b'<response_time>0.0000</response_time>\n'
+        b'</pingdom_http_custom_check>\n'
+    )
+
+
+def test_unhealthy_check_valid_token(rf):
+    request = rf.get('/', {'token': 'debug'})
+    response = UnhealthyTestView.as_view()(request)
+
+    assert response.status_code == 500
+    assert response.render().content == (
+        b'<?xml version="1.0" encoding="UTF-8"?>\n'
+        b'<pingdom_http_custom_check>\n    '
+        b'<status>unknown error: error</status>\n    '
+        b'<response_time>0.0000</response_time>\n'
+        b'</pingdom_http_custom_check>\n'
+    )
