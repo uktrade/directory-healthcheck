@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 def get_version():
     pattern = re.compile(r'__version__\s+=\s+(.*)')
 
-    with open('sigauth/version.py', 'rb') as src:
+    with open('directory_healthcheck/version.py', 'rb') as src:
         return str(ast.literal_eval(
             pattern.search(src.read().decode('utf-8')).group(1)
         ))
