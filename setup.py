@@ -30,9 +30,21 @@ setup(
     url='https://github.com/uktrade/directory-healthcheck',
     license='MIT',
     author='Department for International Trade',
-    description='Library to streamline healthchecks for DIT Directory apps.',
-    packages=find_packages(),
+    description='Library to streamline healthchecks for Directory apps.',
+    packages=find_packages(exclude=["tests.*", "tests"]),
     long_description=open('README.md').read(),
     include_package_data=True,
-    install_requires=get_requirements()
+    install_requires=get_requirements(),
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Web Environment',
+        'Framework :: Django',
+        'Framework :: Django :: 1.11',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3.5',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ]
 )
