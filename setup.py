@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='directory_healthcheck',
-    version='0.5.0',
+    version='0.5.1',
     url='https://github.com/uktrade/directory-healthcheck',
     license='MIT',
     author='Department for International Trade',
