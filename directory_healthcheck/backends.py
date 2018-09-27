@@ -10,7 +10,6 @@ from django.conf import settings
 
 class APIBackend(BaseHealthCheckBackend):
 
-    message_bad_status = 'API returned {0.status_code} status code'
 
     def check_status(self):
         from directory_api_client.client import api_client
@@ -21,14 +20,12 @@ class APIBackend(BaseHealthCheckBackend):
         else:
             if response.status_code != 200:
                 raise ServiceReturnedUnexpectedResult(
-                    self.message_bad_status.format(response)
+                    f'API returned {response.status_code} status code'
                 )
         return True
 
 
 class SingleSignOnBackend(BaseHealthCheckBackend):
-
-    message_bad_status = 'SSO proxy returned {0.status_code} status code'
 
     def check_status(self):
         from directory_sso_api_client.client import sso_api_client
@@ -39,14 +36,12 @@ class SingleSignOnBackend(BaseHealthCheckBackend):
         else:
             if response.status_code != 200:
                 raise ServiceReturnedUnexpectedResult(
-                    self.message_bad_status.format(response)
+                    f'SSO proxy returned {response.status_code} status code'
                 )
         return True
 
 
 class FormsAPIBackend(BaseHealthCheckBackend):
-
-    message_bad_status = 'Forms API returned {0.status_code} status code'
 
     def check_status(self):
         from directory_forms_api_client.client import forms_api_client
@@ -57,7 +52,7 @@ class FormsAPIBackend(BaseHealthCheckBackend):
         else:
             if response.status_code != 200:
                 raise ServiceReturnedUnexpectedResult(
-                    self.message_bad_status.format(response)
+                    f'Forms API returned {response.status_code} status code'
                 )
         return True
 
