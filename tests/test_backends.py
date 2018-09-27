@@ -112,3 +112,36 @@ def test_sentry_not_ok():
     backend.run_check()
 
     assert backend.pretty_status() == 'unavailable: (Sentry) oops'
+
+
+@patch(
+    'directory_cms_client.client.cms_api_client.ping',
+    Mock(side_effect=Exception('oops'))
+)
+def test_cms_api_ping_connection_error():
+    backend = backends.CMSAPIBackend()
+    backend.run_check()
+
+    assert backend.pretty_status() == 'unavailable: (CMS API) oops'
+
+
+@patch(
+    'directory_cms_client.client.cms_api_client.ping',
+    Mock(return_value=Mock(status_code=500))
+)
+def test_cms_api_ping_not_ok():
+    backend = backends.CMSAPIBackend()
+    backend.run_check()
+
+    assert backend.pretty_status() == (
+        'unexpected result: CMS API returned 500 status code'
+    )
+
+
+@patch('directory_cms_client.client.cms_api_client.ping',
+       Mock(return_value=Mock(status_code=200)))
+def test_cms_api_ping_ok():
+    backend = backends.CMSAPIBackend()
+    backend.run_check()
+
+    assert backend.pretty_status() == 'working'

@@ -11,3 +11,4 @@ setuptools>=38.6.0,<39.0.0
 directory-sso-api-client
 directory-api-client
 directory-forms-api-client
+directory-cms-client

@@ -100,20 +100,6 @@ def test_sso_view(client):
 
 
 @mock.patch(
-    'directory_healthcheck.backends.FormsAPIBackend.run_check',
-    mock.Mock(return_value=True)
-)
-@mock.patch(
-    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
-    mock.Mock(return_value=True)
-)
-def test_sentry_view(client):
-    response = client.get(reverse('forms-api'))
-
-    assert response.status_code == 200
-
-
-@mock.patch(
     'directory_healthcheck.backends.SentryBackend.run_check',
     mock.Mock(return_value=True)
 )
@@ -121,7 +107,41 @@ def test_sentry_view(client):
     'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
     mock.Mock(return_value=True)
 )
-def test_forms_api_view(client):
+def test_sentry_view(client):
     response = client.get(reverse('sentry'))
+
+    assert response.status_code == 200
+
+
+@mock.patch(
+    'directory_healthcheck.backends.FormsAPIBackend.run_check',
+    mock.Mock(return_value=True)
+)
+@mock.patch(
+    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
+    mock.Mock(return_value=True)
+)
+def test_forms_api_view(client):
+    response = client.get(reverse('forms-api'))
+
+    assert response.status_code == 200
+
+
+@mock.patch(
+    'directory_healthcheck.backends.CMSAPIBackend.run_check',
+    mock.Mock(return_value=True)
+)
+@mock.patch(
+    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
+    mock.Mock(return_value=True)
+)
+def test_cms_api_view(client):
+    response = client.get(reverse('cms'))
+
+    assert response.status_code == 200
+
+
+def test_ping_view(client):
+    response = client.get(reverse('ping'))
 
     assert response.status_code == 200
