@@ -28,7 +28,7 @@ DIRECTORY_HEALTHCHECK_BACKENDS = [
 ## Installation
 
 ```shell
-pip install -e git+https://git@github.com/uktrade/directory-healthcheck.git@v0.1.0#egg=directory-healthcheck
+pip install directory-healthcheck
 ```
 
 ## Development
