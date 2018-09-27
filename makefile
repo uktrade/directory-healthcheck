@@ -8,10 +8,10 @@ test_requirements:
 	pip install -r requirements_test.txt
 
 flake8:
-	flake8 . --exclude=.venv,setup.py,directory_healthcheck/version.py
+	flake8 . --exclude=.venv,setup.py
 
 pytest:
-	pytest . --cov=. --cov-config=.coveragerc $(pytest_args)
+	pytest . --cov=. --cov-config=.coveragerc $(pytest_args) --capture=no
 
 CODECOV := \
 	if [ "$$CODECOV_REPO_TOKEN" != "" ]; then \
@@ -20,14 +20,6 @@ CODECOV := \
 
 test: flake8 pytest
 	$(CODECOV)
-
-compile_requirements:
-	python3 -m piptools compile requirements.in
-
-compile_test_requirements:
-	python3 -m piptools compile requirements_test.in
-
-compile_all_requirements: compile_requirements compile_test_requirements
 
 publish:
 	rm -rf build dist; \

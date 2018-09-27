@@ -4,6 +4,8 @@ from django.utils.crypto import constant_time_compare
 from django.views.decorators.cache import never_cache
 from django.views.generic import TemplateView
 
+from directory_healthcheck import backends
+
 
 class BaseHealthCheckAPIView(TemplateView):
     template_name = 'directory_healthcheck/healthcheck.html'
@@ -35,3 +37,23 @@ class BaseHealthCheckAPIView(TemplateView):
         return {
             'service_checker': self.service_checker
         }
+
+
+class APIHealthcheckView(BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return backends.APIBackend()
+
+
+class SingleSignOnHealthcheckView(BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return backends.SingleSignOnBackend()
+
+
+class SentryHealthcheckView(BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return backends.SentryBackend()
+
+
+class FormsAPIBackendHealthcheckView(BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return backends.FormsAPIBackend()
