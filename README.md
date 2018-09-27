@@ -9,27 +9,53 @@
 
 ---
 
-## Usage
-In `settings.py` add the following to settings `INSTALLED_APPS`:
-
-`directory_healthcheck`
-
-In `settings.py` state which health check backends should be used, e.g.:
-
-```
-DIRECTORY_HEALTHCHECK_BACKENDS = [
-    directory_healthcheck.backends.db
-    directory_healthcheck.backends.cache,
-    directory_healthcheck.backends.elastic_search,
-    directory_healthcheck.backends.sentry,
-]
-```
-
 ## Installation
 
 ```shell
 pip install directory-healthcheck
 ```
+
+## Usage
+In `settings.py` add the following to settings `INSTALLED_APPS`:
+
+```
+    'directory_healthcheck',
+    'health_check',
+```
+
+Then add some views into your `urls.py`:
+
+```
+    url(
+        r'^healthcheck/api/$',
+        directory_healthcheck.views.APIHealthcheckView.as_view(),
+        name='healthcheck-api'
+    ),
+    url(
+        r'^healthcheck/sso/$',
+        directory_healthcheck.views.SingleSignOnHealthcheckView.as_view(),
+        name='healthcheck-sso'
+    ),
+```
+
+or create your own custom views:
+
+```
+from directry_healthcheck.views import BaseHealthCheckAPIView
+from health_check.backends import BaseHealthCheckBackend
+
+class MyCustomBackend(BaseHealthCheckBackend):
+    def check_status(self):
+        # see directory_healthchecks.backends for examples
+        ...
+
+
+class APIHealthcheckView(BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return MyCustomBackend()
+
+```
+
 
 ## Development
 

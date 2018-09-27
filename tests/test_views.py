@@ -1,7 +1,11 @@
+from unittest import mock
+
 from health_check.backends import BaseHealthCheckBackend
 from health_check.exceptions import HealthCheckException
 
 from directory_healthcheck import views
+
+from django.urls import reverse
 
 
 class UnhealthyServiceChecker(BaseHealthCheckBackend):
@@ -65,3 +69,59 @@ def test_unhealthy_check_valid_token(rf):
         b'<response_time>0.0000</response_time>\n'
         b'</pingdom_http_custom_check>\n'
     )
+
+
+@mock.patch(
+    'directory_healthcheck.backends.APIBackend.run_check',
+    mock.Mock(return_value=True)
+)
+@mock.patch(
+    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
+    mock.Mock(return_value=True)
+)
+def test_api_view(client):
+    response = client.get(reverse('api'))
+
+    assert response.status_code == 200
+
+
+@mock.patch(
+    'directory_healthcheck.backends.SingleSignOnBackend.run_check',
+    mock.Mock(return_value=True)
+)
+@mock.patch(
+    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
+    mock.Mock(return_value=True)
+)
+def test_sso_view(client):
+    response = client.get(reverse('sso'))
+
+    assert response.status_code == 200
+
+
+@mock.patch(
+    'directory_healthcheck.backends.FormsAPIBackend.run_check',
+    mock.Mock(return_value=True)
+)
+@mock.patch(
+    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
+    mock.Mock(return_value=True)
+)
+def test_sentry_view(client):
+    response = client.get(reverse('forms-api'))
+
+    assert response.status_code == 200
+
+
+@mock.patch(
+    'directory_healthcheck.backends.SentryBackend.run_check',
+    mock.Mock(return_value=True)
+)
+@mock.patch(
+    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
+    mock.Mock(return_value=True)
+)
+def test_forms_api_view(client):
+    response = client.get(reverse('sentry'))
+
+    assert response.status_code == 200

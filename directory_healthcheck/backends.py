@@ -26,7 +26,7 @@ class APIBackend(BaseHealthCheckBackend):
         return True
 
 
-class SigngleSignOnBackend(BaseHealthCheckBackend):
+class SingleSignOnBackend(BaseHealthCheckBackend):
 
     message_bad_status = 'SSO proxy returned {0.status_code} status code'
 

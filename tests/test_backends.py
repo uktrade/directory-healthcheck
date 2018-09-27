@@ -6,7 +6,7 @@ from directory_healthcheck import backends
 @patch('directory_sso_api_client.client.sso_api_client.ping',
        Mock(side_effect=Exception('oops')))
 def test_single_sign_on_ping_connection_error():
-    backend = backends.SigngleSignOnBackend()
+    backend = backends.SingleSignOnBackend()
     backend.run_check()
 
     assert backend.pretty_status() == 'unavailable: (SSO proxy) oops'
@@ -15,7 +15,7 @@ def test_single_sign_on_ping_connection_error():
 @patch('directory_sso_api_client.client.sso_api_client.ping',
        Mock(return_value=Mock(status_code=500)))
 def test_single_sign_on_ping_not_ok():
-    backend = backends.SigngleSignOnBackend()
+    backend = backends.SingleSignOnBackend()
     backend.run_check()
 
     assert backend.pretty_status() == (
@@ -26,7 +26,7 @@ def test_single_sign_on_ping_not_ok():
 @patch('directory_sso_api_client.client.sso_api_client.ping',
        Mock(return_value=Mock(status_code=200)))
 def test_single_sign_on_ping_ok():
-    backend = backends.SigngleSignOnBackend()
+    backend = backends.SingleSignOnBackend()
     backend.run_check()
 
     assert backend.pretty_status() == 'working'
