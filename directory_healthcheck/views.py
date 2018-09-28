@@ -1,6 +1,7 @@
 from django.conf import settings
-from django.http import HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden
 from django.utils.crypto import constant_time_compare
+from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.generic import TemplateView
 
@@ -57,3 +58,13 @@ class SentryHealthcheckView(BaseHealthCheckAPIView):
 class FormsAPIBackendHealthcheckView(BaseHealthCheckAPIView):
     def create_service_checker(self):
         return backends.FormsAPIBackend()
+
+
+class CMSAPIBackendHealthcheckView(BaseHealthCheckAPIView):
+    def create_service_checker(self):
+        return backends.CMSAPIBackend()
+
+
+class PingView(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('OK')

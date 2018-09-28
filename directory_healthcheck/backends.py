@@ -10,7 +10,6 @@ from django.conf import settings
 
 class APIBackend(BaseHealthCheckBackend):
 
-
     def check_status(self):
         from directory_api_client.client import api_client
         try:
@@ -53,6 +52,22 @@ class FormsAPIBackend(BaseHealthCheckBackend):
             if response.status_code != 200:
                 raise ServiceReturnedUnexpectedResult(
                     f'Forms API returned {response.status_code} status code'
+                )
+        return True
+
+
+class CMSAPIBackend(BaseHealthCheckBackend):
+
+    def check_status(self):
+        from directory_cms_client.client import cms_api_client
+        try:
+            response = cms_api_client.ping()
+        except Exception as error:
+            raise ServiceUnavailable('(CMS API) ' + str(error))
+        else:
+            if response.status_code != 200:
+                raise ServiceReturnedUnexpectedResult(
+                    f'CMS API returned {response.status_code} status code'
                 )
         return True
 

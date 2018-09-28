@@ -17,6 +17,12 @@ def pytest_configure():
                 },
             },
         ],
+        CACHES={
+            'cms_fallback': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'unique-snowflake',
+            }
+        },
         DEBUG=True,
         DIRECTORY_API_CLIENT_BASE_URL='debug',
         DIRECTORY_API_CLIENT_API_KEY='debug',
@@ -30,5 +36,11 @@ def pytest_configure():
         DIRECTORY_FORMS_API_API_KEY='debug',
         DIRECTORY_FORMS_API_SENDER_ID='debug',
         DIRECTORY_FORMS_API_DEFAULT_TIMEOUT=1,
+        DIRECTORY_CMS_API_CLIENT_BASE_URL='debug',
+        DIRECTORY_CMS_API_CLIENT_API_KEY='debug',
+        DIRECTORY_CMS_API_CLIENT_SENDER_ID='debug',
+        DIRECTORY_CMS_API_CLIENT_SERVICE_NAME='debug',
+        DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=1,
+        DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS=1,
         RAVEN_CONFIG={'dsn': 'https://debug:debug@example.com/0'},
     )

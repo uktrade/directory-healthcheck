@@ -24,4 +24,14 @@ urlpatterns = [
         directory_healthcheck.views.FormsAPIBackendHealthcheckView.as_view(),
         name='forms-api'
     ),
+    url(
+        r'^cms/$',
+        directory_healthcheck.views.CMSAPIBackendHealthcheckView.as_view(),
+        name='cms'
+    ),
+    url(
+        r'^ping/$',
+        directory_healthcheck.views.PingView.as_view(),
+        name='ping'
+    ),
 ]
