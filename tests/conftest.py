@@ -2,9 +2,9 @@ def pytest_configure():
     from django.conf import settings
     settings.configure(
         ROOT_URLCONF='tests.urls',
-        HEALTH_CHECK_TOKEN='debug',
+        DIRECTORY_HEALTHCHECK_TOKEN='debug',
+        DIRECTORY_HEALTHCHECK_BACKENDS=[],
         INSTALLED_APPS=[
-            'health_check',
             'directory_healthcheck',
         ],
         TEMPLATES=[
@@ -20,7 +20,11 @@ def pytest_configure():
         CACHES={
             'cms_fallback': {
                 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                'LOCATION': 'unique-snowflake',
+                'LOCATION': 'unique-snowflake-one',
+            },
+            'api_fallback': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'unique-snowflake-two',
             }
         },
         DEBUG=True,

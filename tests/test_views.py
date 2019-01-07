@@ -1,11 +1,16 @@
-from unittest import mock
-
 from health_check.backends import BaseHealthCheckBackend
 from health_check.exceptions import HealthCheckException
-
-from directory_healthcheck import views
+from health_check.plugins import plugin_dir
+import pytest
 
 from django.urls import reverse
+
+
+@pytest.fixture(autouse=True)
+def backends():
+    unaltered_value = plugin_dir._registry
+    yield plugin_dir
+    plugin_dir._registry = unaltered_value
 
 
 class UnhealthyServiceChecker(BaseHealthCheckBackend):
@@ -26,122 +31,46 @@ class HealthyServiceChecker(BaseHealthCheckBackend):
         self.time_taken = 0
 
 
-class UnhealthyTestView(views.BaseHealthCheckAPIView):
-    def create_service_checker(self):
-        return UnhealthyServiceChecker()
-
-
-class HealthyTestView(views.BaseHealthCheckAPIView):
-    def create_service_checker(self):
-        return HealthyServiceChecker()
-
-
-def test_health_check_no_token(rf):
-    request = rf.get('/')
-    response = HealthyTestView.as_view()(request)
+def test_health_check_no_token(client):
+    response = client.get(reverse('healthcheck'))
 
     assert response.status_code == 403
 
 
-def test_health_check_valid_token(rf):
-    request = rf.get('/', {'token': 'debug'})
-    response = HealthyTestView.as_view()(request)
+def test_health_check_valid_token(client, settings, backends):
+    backends.register(HealthyServiceChecker)
+    url = reverse('healthcheck')
+    response = client.get(url, {'token': settings.DIRECTORY_HEALTHCHECK_TOKEN})
 
     assert response.status_code == 200
     assert response.render().content == (
-        b'<?xml version="1.0" encoding="UTF-8"?>\n'
-        b'<pingdom_http_custom_check>\n    '
-        b'<status>OK</status>\n    '
-        b'<response_time>0.0000</response_time>\n'
+        b'<?xml version="1.0" encoding="UTF-8"?>'
+        b'<pingdom_http_custom_check><status>\n    \n        '
+        b'OK\n    \n    '
+        b'</status>'
+        b'<response_time>0</response_time>'
         b'</pingdom_http_custom_check>\n'
     )
 
 
-def test_unhealthy_check_valid_token(rf):
-    request = rf.get('/', {'token': 'debug'})
-    response = UnhealthyTestView.as_view()(request)
+def test_unhealthy_check_valid_token(client, settings, backends):
+    backends.register(UnhealthyServiceChecker)
+    url = reverse('healthcheck')
+    response = client.get(url, {'token': settings.DIRECTORY_HEALTHCHECK_TOKEN})
 
     assert response.status_code == 500
     assert response.render().content == (
-        b'<?xml version="1.0" encoding="UTF-8"?>\n'
-        b'<pingdom_http_custom_check>\n    '
-        b'<status>unknown error: error</status>\n    '
-        b'<response_time>0.0000</response_time>\n'
+        b'<?xml version="1.0" encoding="UTF-8"?>'
+        b'<pingdom_http_custom_check>'
+        b'<status>\n    \n        '
+        b'UnhealthyServiceChecker: unknown error: error\n    \n    '
+        b'</status><response_time>0</response_time>'
         b'</pingdom_http_custom_check>\n'
     )
 
 
-@mock.patch(
-    'directory_healthcheck.backends.APIBackend.run_check',
-    mock.Mock(return_value=True)
-)
-@mock.patch(
-    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
-    mock.Mock(return_value=True)
-)
-def test_api_view(client):
-    response = client.get(reverse('api'))
-
-    assert response.status_code == 200
-
-
-@mock.patch(
-    'directory_healthcheck.backends.SingleSignOnBackend.run_check',
-    mock.Mock(return_value=True)
-)
-@mock.patch(
-    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
-    mock.Mock(return_value=True)
-)
-def test_sso_view(client):
-    response = client.get(reverse('sso'))
-
-    assert response.status_code == 200
-
-
-@mock.patch(
-    'directory_healthcheck.backends.SentryBackend.run_check',
-    mock.Mock(return_value=True)
-)
-@mock.patch(
-    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
-    mock.Mock(return_value=True)
-)
-def test_sentry_view(client):
-    response = client.get(reverse('sentry'))
-
-    assert response.status_code == 200
-
-
-@mock.patch(
-    'directory_healthcheck.backends.FormsAPIBackend.run_check',
-    mock.Mock(return_value=True)
-)
-@mock.patch(
-    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
-    mock.Mock(return_value=True)
-)
-def test_forms_api_view(client):
-    response = client.get(reverse('forms-api'))
-
-    assert response.status_code == 200
-
-
-@mock.patch(
-    'directory_healthcheck.backends.CMSAPIBackend.run_check',
-    mock.Mock(return_value=True)
-)
-@mock.patch(
-    'directory_healthcheck.views.BaseHealthCheckAPIView.has_permission',
-    mock.Mock(return_value=True)
-)
-def test_cms_api_view(client):
-    response = client.get(reverse('cms'))
-
-    assert response.status_code == 200
-
-
-def test_ping_view(client):
-    response = client.get(reverse('ping'))
+def test_ping(client):
+    url = reverse('healthcheck-ping')
+    response = client.get(url)
 
     assert response.status_code == 200

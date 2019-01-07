@@ -1,1 +1,1 @@
-recursive-include directory_healthcheck *.html
+include directory_healthcheck/templates/directory_healthcheck/healthcheck.html
