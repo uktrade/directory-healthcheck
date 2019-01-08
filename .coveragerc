@@ -1,2 +1,2 @@
 [run]
-omit = .venv/*,setup.py,directory_healthcheck/version.py
+omit = .venv/*,setup.py,directory_healthcheck/version.py,directory_healthcheck/apps.py
