@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='directory_healthcheck',
-    version='1.0.1',
+    version='1.1.1',
     url='https://github.com/uktrade/directory-healthcheck',
     license='MIT',
     author='Department for International Trade',
@@ -14,13 +14,13 @@ setup(
     include_package_data=True,
     install_requires=[
         'django-health-check==3.8.0',
-        'django>=1.11.18,<2.0a1',
+        'django>=1.11,<3.0a1',
     ],
     extras_require={
         'test': [
-            'pytest==3.0.2',
-            'pytest-cov==2.3.1',
-            'pytest-django==3.0.0',
+            'pytest==3.10.0',
+            'pytest-cov==2.7.1',
+            'pytest-django==3.5.0',
             'flake8==3.0.4',
             'codecov==2.0.9',
             'twine>=1.11.0,<2.0.0',
@@ -39,6 +39,9 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Django',
         'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.1',
+        'Framework :: Django :: 2.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
