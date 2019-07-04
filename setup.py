@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='directory_healthcheck',
-    version='1.1.1',
+    version='1.1.2',
     url='https://github.com/uktrade/directory-healthcheck',
     license='MIT',
     author='Department for International Trade',
@@ -11,10 +11,15 @@ setup(
     packages=find_packages(exclude=["tests.*", "tests"]),
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
+    package_data={
+        'directory_healthcheck': [
+            'templates/directory_healthcheck/healthcheck.html'
+        ],
+    },
     include_package_data=True,
     install_requires=[
         'django-health-check==3.8.0',
-        'django>=1.11,<3.0a1',
+        'django>=1.11.22,<3.0a1',
     ],
     extras_require={
         'test': [
