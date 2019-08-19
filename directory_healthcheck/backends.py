@@ -1,3 +1,6 @@
+from django.test import Client as TestClient
+from django.urls import reverse_lazy
+
 from health_check.backends import BaseHealthCheckBackend
 from health_check.exceptions import (
     ServiceReturnedUnexpectedResult, ServiceUnavailable
@@ -6,7 +9,6 @@ from raven import Client
 from raven.transport.http import HTTPTransport
 
 from django.conf import settings
-
 
 class APIBackend(BaseHealthCheckBackend):
 
@@ -87,3 +89,25 @@ class SentryBackend(BaseHealthCheckBackend):
         except Exception as error:
             raise ServiceUnavailable('(Sentry) ' + str(error))
         return True
+
+
+class SearchSortBackend(BaseHealthCheckBackend):
+    
+    def check_status(self):
+
+        client = TestClient()
+        response = client.get(reverse_lazy('search'), data={'q': 'qwerty123'})
+
+        ordering_success = False
+        if response.status_code == 200:
+            results = response.context_data['results']
+            if (len(results) == 4) and \
+                (results[0]["type"] == "Service") and \
+                (results[-1]["type"] == "Export opportunity"):
+                ordering_success = True
+
+        if not ordering_success:
+                raise ServiceReturnedUnexpectedResult('Search sort ordering via Activity Stream failed')
+        return True
+
+
