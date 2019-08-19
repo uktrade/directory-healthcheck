@@ -145,3 +145,25 @@ def test_cms_api_ping_ok():
     backend.run_check()
 
     assert backend.pretty_status() == 'working'
+
+
+@patch('django.test.Client.get',
+       Mock(return_value=Mock(status_code=500)))
+@patch('django.urls.reverse', Mock(return_value='/search'))
+def test_search_sort_not_ok():
+    backend = backends.SearchSortBackend()
+    backend.run_check()
+
+    assert backend.pretty_status() == 'unexpected result: Search sort ordering via Activity Stream failed'
+
+
+@patch('django.test.Client.get',
+       Mock(return_value=Mock(status_code=200, context_data={
+            "results": [{"type": "Service"},{},{},{"type": "Export opportunity"}]
+        })))
+@patch('django.urls.reverse', Mock(return_value='/search'))
+def test_search_sort_ok():
+    backend = backends.SearchSortBackend()
+    backend.run_check()
+
+    assert backend.pretty_status() == 'working'
