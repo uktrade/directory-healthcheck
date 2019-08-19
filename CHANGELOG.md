@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+### Implemented enhancements
+- Add Search Sort endpoint
+
 ## 1.1.2
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/13/files) (2019-07-04)
 
