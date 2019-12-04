@@ -1,11 +1,5 @@
 from health_check.backends import BaseHealthCheckBackend
-from health_check.exceptions import (
-    ServiceReturnedUnexpectedResult, ServiceUnavailable
-)
-from raven import Client
-from raven.transport.http import HTTPTransport
-
-from django.conf import settings
+from health_check.exceptions import ServiceReturnedUnexpectedResult, ServiceUnavailable
 
 
 class APIBackend(BaseHealthCheckBackend):
@@ -69,21 +63,4 @@ class CMSAPIBackend(BaseHealthCheckBackend):
                 raise ServiceReturnedUnexpectedResult(
                     f'CMS API returned {response.status_code} status code'
                 )
-        return True
-
-
-class SentryBackend(BaseHealthCheckBackend):
-
-    def check_status(self):
-        client = Client(
-            **settings.RAVEN_CONFIG,
-            raise_send_errors=True,
-            install_sys_hook=False,
-            install_logging_hook=False,
-            transport=HTTPTransport
-        )
-        try:
-            client.captureMessage('healthcheck')
-        except Exception as error:
-            raise ServiceUnavailable('(Sentry) ' + str(error))
         return True

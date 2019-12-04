@@ -7,9 +7,6 @@ clean:
 test_requirements:
 	pip install -e .[test]
 
-flake8:
-	flake8 . --exclude=.venv,setup.py
-
 pytest:
 	pytest . --cov=. --cov-config=.coveragerc $(pytest_args) --capture=no
 

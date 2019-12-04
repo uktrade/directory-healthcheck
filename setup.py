@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='directory_healthcheck',
-    version='1.1.2',
+    version='2.0.0',
     url='https://github.com/uktrade/directory-healthcheck',
     license='MIT',
     author='Department for International Trade',
@@ -26,7 +26,7 @@ setup(
             'pytest==3.10.0',
             'pytest-cov==2.7.1',
             'pytest-django==3.5.0',
-            'flake8==3.0.4',
+            'flake8==3.7.8',
             'codecov==2.0.9',
             'twine>=1.11.0,<2.0.0',
             'wheel>=0.31.0,<1.0.0',

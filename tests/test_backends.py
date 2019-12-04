@@ -98,22 +98,6 @@ def test_forms_api_ping_ok():
     assert backend.pretty_status() == 'working'
 
 
-@patch('raven.Client.captureMessage', Mock(return_value=Mock(status_code=200)))
-def test_sentry_ok():
-    backend = backends.SentryBackend()
-    backend.run_check()
-
-    assert backend.pretty_status() == 'working'
-
-
-@patch('raven.Client.captureMessage',  Mock(side_effect=Exception('oops')))
-def test_sentry_not_ok():
-    backend = backends.SentryBackend()
-    backend.run_check()
-
-    assert backend.pretty_status() == 'unavailable: (Sentry) oops'
-
-
 @patch(
     'directory_cms_client.client.cms_api_client.ping',
     Mock(side_effect=Exception('oops'))
