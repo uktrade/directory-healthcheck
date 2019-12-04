@@ -1,0 +1,3 @@
+[flake8]
+exclude=.venv,venv,setup.py
+max-line-length=120
