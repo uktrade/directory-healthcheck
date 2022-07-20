@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 2.1.0
+[Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/17/files) (2022-07-20)
+### Bugs fixed
+- GLS-313 - Codecov patch
+
+
 ## 2.0.0
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/16/files) (2019-12-04)
 
