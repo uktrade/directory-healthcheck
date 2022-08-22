@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.0.0
+[Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/18/files) (2022-08-22)
+
+### Enhancement
+- GLS-384 - Make compatible with Django 3.2
+
 ## 2.1.0
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/17/files) (2022-07-20)
 ### Bugs fixed
