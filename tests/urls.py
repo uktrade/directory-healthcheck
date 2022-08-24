@@ -1,17 +1,15 @@
-from django.conf.urls import url
-
 import directory_healthcheck.views
-
+from django.urls import path
 
 urlpatterns = [
-    url(
-        r'^healthcheck/$',
+    path(
+        r"^healthcheck/$",
         directory_healthcheck.views.HealthcheckView.as_view(),
-        name='healthcheck'
+        name="healthcheck",
     ),
-    url(
-        r'^healthcheck/ping/$',
+    path(
+        r"^healthcheck/ping/$",
         directory_healthcheck.views.PingView.as_view(),
-        name='healthcheck-ping'
+        name="healthcheck-ping",
     ),
 ]

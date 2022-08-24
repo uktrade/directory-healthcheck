@@ -1,9 +1,8 @@
-from setuptools import setup, find_packages
-
+from setuptools import find_packages, setup
 
 setup(
     name="directory_healthcheck",
-    version="2.1.0",
+    version="3.0.0",
     url="https://github.com/uktrade/directory-healthcheck",
     license="MIT",
     author="Department for International Trade",
@@ -16,15 +15,15 @@ setup(
     },
     include_package_data=True,
     install_requires=[
-        "django-health-check==3.8.0",
-        "django>=1.11.22,<3.0a1",
+        "django-health-check==3.16.5",
+        "django>=1.11.22,<3.3.*",
     ],
     extras_require={
         "test": [
             "pytest==3.10.0",
             "pytest-cov==2.7.1",
             "pytest-django==3.5.0",
-            "flake8==3.7.8",
+            "flake8==5.0.4",
             "codecov>=2.0.16",
             "twine>=1.11.0,<2.0.0",
             "wheel>=0.31.0,<1.0.0",
@@ -34,7 +33,7 @@ setup(
             "directory-api-client",
             "directory-forms-api-client",
             "directory-cms-client",
-            "directory-client-core>=4.3.0,<5.0.0",
+            "directory-client-core>=4.3.0,<7.1.0",
         ]
     },
     classifiers=[
@@ -45,12 +44,13 @@ setup(
         "Framework :: Django :: 2.0",
         "Framework :: Django :: 2.1",
         "Framework :: Django :: 2.2",
+        "Framework :: Django :: 3.1",
+        "Framework :: Django :: 3.2",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.9",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.5",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 )
