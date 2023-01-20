@@ -28,7 +28,7 @@ setup(
             "twine>=1.11.0,<2.0.0",
             "wheel>=0.31.0,<1.0.0",
             "raven==5.19.0",
-            "setuptools>=66.1.0,<66.1.0",
+            "setuptools>=59.6.0,<66.1.0",
             "directory-sso-api-client",
             "directory-api-client",
             "directory-forms-api-client",
