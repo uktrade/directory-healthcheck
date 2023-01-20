@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.2
+[Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/20/files) (2023-01-20)
+
+### Enhancement
+- KLS-328 - Patch directory-healthcheck setuptools to version 66.1.0
 
 ## 3.0.1
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/19/files) (2022-09-20)

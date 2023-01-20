@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="directory_healthcheck",
-    version="3.0.1",
+    version="3.0.2",
     url="https://github.com/uktrade/directory-healthcheck",
     license="MIT",
     author="Department for International Trade",
@@ -28,7 +28,7 @@ setup(
             "twine>=1.11.0,<2.0.0",
             "wheel>=0.31.0,<1.0.0",
             "raven==5.19.0",
-            "setuptools>=38.6.0,<39.0.0",
+            "setuptools>=59.6.0,<66.1.0",
             "directory-sso-api-client",
             "directory-api-client",
             "directory-forms-api-client",
