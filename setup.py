@@ -16,7 +16,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "django-health-check==3.16.5",
-        "django>=1.11.22,<4.0.0",
+        "django>=3.2.18,<=4.0.9",
     ],
     extras_require={
         "test": [
