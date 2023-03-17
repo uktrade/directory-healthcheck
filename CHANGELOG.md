@@ -1,9 +1,9 @@
 # Changelog
 
-## Pre-Release
-### Patch
+## 3.0.3
+[Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/21/files) (2023-03-17)
+### Enhancement
 - KLS-448 - Upgrade Django to 3.2.18
-
 ## 3.0.2
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/20/files) (2023-01-20)
 
