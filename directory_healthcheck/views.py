@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseForbidden
 from django.utils.crypto import constant_time_compare
 from django.views import View
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 
 import health_check.views
@@ -16,7 +17,7 @@ class HealthcheckView(health_check.views.MainView):
             settings.DIRECTORY_HEALTHCHECK_TOKEN
         )
 
-    @never_cache
+    @method_decorator(never_cache)
     def get(self, *args, **kwargs):
         if not self.has_permission():
             return HttpResponseForbidden()
@@ -30,6 +31,6 @@ class HealthcheckView(health_check.views.MainView):
 
 
 class PingView(View):
-    @never_cache
+    @method_decorator(never_cache)
     def get(self, request, *args, **kwargs):
         return HttpResponse('OK')
