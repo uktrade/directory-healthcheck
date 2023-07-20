@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="directory_healthcheck",
-    version="3.1.1",
+    version="3.2.0",
     url="https://github.com/uktrade/directory-healthcheck",
     license="MIT",
     author="Department for International Trade",
@@ -16,7 +16,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "django-health-check==3.17.0",
-        "django>=3.2.18,<=4.1.9",
+        "django>=4.1.10,<4.2",
     ],
     extras_require={
         "test": [
@@ -33,7 +33,7 @@ setup(
             "directory-api-client",
             "directory-forms-api-client",
             "directory-cms-client",
-            "directory-client-core>=4.3.0,<7.1.0",
+            "directory-client-core",
         ]
     },
     classifiers=[

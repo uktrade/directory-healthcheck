@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.0
+[Full Changelog]() (2023-07-20)
+### Enhancement
+- KLS-911 - Upgrade Django to 4.1.10
+
 ## 3.0.4
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/23/files) (2023-04-06)
 ### Enhancement
