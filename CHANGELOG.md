@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.2.0
+## 3.1.2
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/26/files) (2023-07-20)
 ### Enhancement
 - KLS-911 - Upgrade Django to 4.1.10
