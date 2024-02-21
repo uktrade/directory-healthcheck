@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.4
+[Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/) (2024-02-21)
+### Enhancement
+- KLS-1948 - Upgrade Django to 4.2.10 minimum
+
 ## 3.3
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/29) (2024-01-22)
 ### Enhancement
