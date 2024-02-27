@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.5
+[Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/30) (2024-02-27)
+### Enhancement
+- POLS-94 Add code-owners file
+
 ## 3.4
 [Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/30) (2024-02-21)
 ### Enhancement
