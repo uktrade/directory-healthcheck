@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="directory_healthcheck",
-    version="3.6",
+    version="3.7",
     url="https://github.com/uktrade/directory-healthcheck",
     license="MIT",
     author="Department for International Trade",
@@ -11,7 +11,7 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     package_data={
-        "directory_healthcheck": ["templates/directory_healthcheck/healthcheck.html"],
+        "directory_healthcheck": ["templates/directory_healthcheck/healthcheck.html", "templates/directory_healthcheck/pingdom.xml"],
     },
     include_package_data=True,
     install_requires=[
