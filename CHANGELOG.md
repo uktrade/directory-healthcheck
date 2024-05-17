@@ -1,7 +1,7 @@
 # Changelog
 
 ## 3.6
-[Full Changelog]() (2024-05-17)
+[Full Changelog](https://github.com/uktrade/directory-healthcheck/pull/32) (2024-05-17)
 ### Enhancement
 - GREATUK-742 Add new pingdom xml template for DBT Platform
 
