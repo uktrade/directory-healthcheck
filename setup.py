@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="directory_healthcheck",
-    version="3.5",
+    version="3.6",
     url="https://github.com/uktrade/directory-healthcheck",
     license="MIT",
     author="Department for International Trade",
@@ -15,7 +15,7 @@ setup(
     },
     include_package_data=True,
     install_requires=[
-        "django-health-check==3.18.1",
+        "django-health-check==3.18.2",
         "django>=4.2.10,<5.0",
     ],
     extras_require={
