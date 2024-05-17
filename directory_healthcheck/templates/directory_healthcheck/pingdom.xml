@@ -1,0 +1,11 @@
+{% spaceless %}
+<?xml version="1.0" encoding="UTF-8"?>
+<pingdom_http_custom_check>
+  <status>
+     <strong>{{ status }}</strong>
+  </status>
+</pingdom_http_custom_check>
+{% for error in errors %}
+    <!--{{ error }}-->
+{% endfor %}
+{% endspaceless %}
